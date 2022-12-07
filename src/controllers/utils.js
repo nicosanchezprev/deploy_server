@@ -3,7 +3,11 @@ const { Pokemon, Type } = require('../db.js');
 
 const findTypes = async () => {
   try {
-    const api = await axios.get('https://pokeapi.co/api/v2/type');
+    const api = await axios.get('https://pokeapi.co/api/v2/type', {
+      headers: {
+        "accept-encoding": "*",
+      },
+    });
 
     for(t of api.data.results) {
       const existe = await Type.findOne({ where: {name: t.name }});
@@ -21,7 +25,11 @@ const findTypes = async () => {
 
 const findPokemonsApi = async () => {
   try {
-    const api_1ra = await axios.get('https://pokeapi.co/api/v2/pokemon');
+    const api_1ra = await axios.get('https://pokeapi.co/api/v2/pokemon', {
+      headers: {
+        "accept-encoding": "*",
+      },
+    });
     const poke_mitad1 = api_1ra.data.results;
   
     const api_2da = await axios.get(api_1ra.data.next);
@@ -99,7 +107,11 @@ const findPokemonName = async (name) => {
     
     if (!pokeName[0]) {
       const api = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name}`
+        `https://pokeapi.co/api/v2/pokemon/${name}`, {
+          headers: {
+            "accept-encoding": "*",
+          },
+        }
       ).then(response => response.data);
       
       const idPokemon = api.id;
@@ -149,7 +161,11 @@ const findPokeDetail = async (id) => {
     } else {
       // BUSCO EN LA API
       const api = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
+        `https://pokeapi.co/api/v2/pokemon/${id}`, {
+          headers: {
+            "accept-encoding": "*",
+          },
+        }
       ).then(response => response.data);
     
       const namePokemon = api.name;
