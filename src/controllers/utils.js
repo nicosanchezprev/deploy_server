@@ -5,7 +5,7 @@ const findTypes = async () => {
   try {
     const api = await axios.get('https://pokeapi.co/api/v2/type', {
       headers: {
-        "accept-encoding": "*",
+        "accept-encoding": null,
       },
     });
 
@@ -27,7 +27,7 @@ const findPokemonsApi = async () => {
   try {
     const api_1ra = await axios.get('https://pokeapi.co/api/v2/pokemon', {
       headers: {
-        "accept-encoding": "*",
+        "accept-encoding": null,
       },
     });
     const poke_mitad1 = api_1ra.data.results;
@@ -109,7 +109,7 @@ const findPokemonName = async (name) => {
       const api = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${name}`, {
           headers: {
-            "accept-encoding": "*",
+            "accept-encoding": null,
           },
         }
       ).then(response => response.data);
@@ -163,7 +163,7 @@ const findPokeDetail = async (id) => {
       const api = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${id}`, {
           headers: {
-            "accept-encoding": "*",
+            "accept-encoding": null,
           },
         }
       ).then(response => response.data);
