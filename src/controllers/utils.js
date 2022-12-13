@@ -1,15 +1,11 @@
 const axios = require('axios');
 const { Pokemon, Type } = require('../db.js');
 
-const axiosConfig = {
-  headers: {
-    "accept-encoding": null,
-  },
-};
-
 const findTypes = async () => {
   try {
-    const api = await axios.get('https://pokeapi.co/api/v2/type', axiosConfig);
+    const api = await axios.get('https://pokeapi.co/api/v2/type', {headers: {
+      "accept-encoding": "*",
+    }});
 
     for(t of api.data.results) {
       const existe = await Type.findOne({ where: {name: t.name }});
@@ -27,10 +23,14 @@ const findTypes = async () => {
 
 const findPokemonsApi = async () => {
   try {
-    const api_1ra = await axios.get('https://pokeapi.co/api/v2/pokemon', axiosConfig);
+    const api_1ra = await axios.get('https://pokeapi.co/api/v2/pokemon', {headers: {
+      "accept-encoding": "*",
+    }});
     const poke_mitad1 = api_1ra.data.results;
   
-    const api_2da = await axios.get(api_1ra.data.next);
+    const api_2da = await axios.get(api_1ra.data.next, {headers: {
+      "accept-encoding": "*",
+    }});
     const poke_mitad2 = api_2da.data.results;
 
     const allPoke = [...poke_mitad1, ...poke_mitad2];
@@ -38,7 +38,9 @@ const findPokemonsApi = async () => {
     const arrInfo = [];
     for(p of allPoke) {
       // imagen
-      const api = await axios.get(p.url);
+      const api = await axios.get(p.url, {headers: {
+        "accept-encoding": "*",
+      }});
       const img = api.data.sprites.other["official-artwork"].front_default;
       // nombre 
       const name = api.data.name;
@@ -105,7 +107,9 @@ const findPokemonName = async (name) => {
     
     if (!pokeName[0]) {
       const api = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name}`, axiosConfig).then(response => response.data);
+        `https://pokeapi.co/api/v2/pokemon/${name}`, {headers: {
+          "accept-encoding": "*",
+        }}).then(response => response.data);
       
       const idPokemon = api.id;
       const namePokemon = api.name;
@@ -154,7 +158,9 @@ const findPokeDetail = async (id) => {
     } else {
       // BUSCO EN LA API
       const api = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${id}`, axiosConfig).then(response => response.data);
+        `https://pokeapi.co/api/v2/pokemon/${id}`, {headers: {
+          "accept-encoding": "*",
+        }}).then(response => response.data);
     
       const namePokemon = api.name;
       const hpPokemon = api.stats[0].base_stat;
